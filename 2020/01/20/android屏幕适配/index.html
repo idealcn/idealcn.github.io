@@ -131,7 +131,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    359 字
+                    405 字
                   </span>&nbsp;
                 
 
@@ -172,24 +172,49 @@
       <div class="py-5 z-depth-3" id="board">
         <div class="post-content mx-auto" id="post">
           <div class="markdown-body">
-            <h1 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h1><h2 id="屏幕尺寸"><a href="#屏幕尺寸" class="headerlink" title="屏幕尺寸"></a>屏幕尺寸</h2><p>屏幕对角线长度。单位英寸。1英寸≈2.54㎝。</p>
-<h2 id="屏幕分辨率"><a href="#屏幕分辨率" class="headerlink" title="屏幕分辨率"></a>屏幕分辨率</h2><p>屏幕横纵方向上的像素点数，单位是px。1px = 1个像素点数。如1920*1080。</p>
-<h2 id="屏幕像素密度"><a href="#屏幕像素密度" class="headerlink" title="屏幕像素密度"></a>屏幕像素密度</h2><p>每英寸上的像素点数，单位是dpi。即dot per inch。屏幕像素密度与屏幕尺寸和分辨率有关。</p>
-<script type="math/tex; mode=display">
-像素密度 = \sqrt{ width^{2} + height^{2} } / 屏幕尺寸</script><h2 id="区分dpi和dip"><a href="#区分dpi和dip" class="headerlink" title="区分dpi和dip"></a>区分dpi和dip</h2><p>dpi是像素密度，全称是dot per inch。dip是密度无关像素，全称是density independence pixels。</p>
-<h2 id="dip-dpi与px的转换"><a href="#dip-dpi与px的转换" class="headerlink" title="dip,dpi与px的转换"></a>dip,dpi与px的转换</h2><script type="math/tex; mode=display">
-px = dip * (dpi / 160)</script><p>比如：1dip在160dpi的屏幕上显示为1px，在320dpi的屏幕上显示为2px。</p>
-<h1 id="屏幕适配"><a href="#屏幕适配" class="headerlink" title="屏幕适配"></a>屏幕适配</h1><h2 id="为什么要屏幕适配？"><a href="#为什么要屏幕适配？" class="headerlink" title="为什么要屏幕适配？"></a>为什么要屏幕适配？</h2><p>在不同尺寸的设备上，ui控件尺寸显示不一。比如：同样是5.0英寸的屏幕，在320dpi的屏幕上显示32px,在480dpi的屏幕上就显示为48px。前者看起来就会比后者尺寸大。</p>
-<h2 id="适配后的效果"><a href="#适配后的效果" class="headerlink" title="适配后的效果"></a>适配后的效果</h2><p>ui控件在不同设备上显示的尺寸与屏幕的比例保持一致。</p>
-<h2 id="如何适配"><a href="#如何适配" class="headerlink" title="如何适配"></a>如何适配</h2><p>这里使用的是开源框架<a href="https://github.com/JessYanCoding/AndroidAutoSize" target="_blank" rel="noopener">AndroidAutoSize</a>。</p>
-<h3 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h3><pre><code>implementation &#39;me.jessyan:autosize:0.9.5&#39;
-</code></pre><h3 id="配置AndroidManifest-xml"><a href="#配置AndroidManifest-xml" class="headerlink" title="配置AndroidManifest.xml"></a>配置AndroidManifest.xml</h3><pre><code class="lang-xml">&lt;!-- 以宽或者高为基准，配置其一即可 --&gt;
-&lt;meta-data android:name=&quot;design_width_in_dp&quot;
-                 android:value=&quot;360&quot;/&gt;
-      &lt;meta-data android:name=&quot;design_height_in_dp&quot;
-                 android:value=&quot;640&quot;/&gt;
+            <h1 id="基础概念"><a class="markdownIt-Anchor" href="#基础概念"></a> 基础概念</h1>
+<h2 id="屏幕尺寸"><a class="markdownIt-Anchor" href="#屏幕尺寸"></a> 屏幕尺寸</h2>
+<p>屏幕对角线长度。单位英寸。1英寸≈2.54㎝。</p>
+<h2 id="屏幕分辨率"><a class="markdownIt-Anchor" href="#屏幕分辨率"></a> 屏幕分辨率</h2>
+<p>屏幕横纵方向上的像素点数，单位是px。1px = 1个像素点数。如1920*1080。</p>
+<h2 id="屏幕像素密度"><a class="markdownIt-Anchor" href="#屏幕像素密度"></a> 屏幕像素密度</h2>
+<p>每英寸上的像素点数，单位是dpi。即dot per inch。屏幕像素密度与屏幕尺寸和分辨率有关。</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">像</mi><mi mathvariant="normal">素</mi><mi mathvariant="normal">密</mi><mi mathvariant="normal">度</mi><mo>=</mo><msqrt><mrow><mi>w</mi><mi>i</mi><mi>d</mi><mi>t</mi><msup><mi>h</mi><mn>2</mn></msup><mo>+</mo><mi>h</mi><mi>e</mi><mi>i</mi><mi>g</mi><mi>h</mi><msup><mi>t</mi><mn>2</mn></msup></mrow></msqrt><mi mathvariant="normal">/</mi><mi mathvariant="normal">屏</mi><mi mathvariant="normal">幕</mi><mi mathvariant="normal">尺</mi><mi mathvariant="normal">寸</mi></mrow><annotation encoding="application/x-tex">像素密度 = \sqrt{ width^{2} + height^{2} } / 屏幕尺寸
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mord cjk_fallback">像</span><span class="mord cjk_fallback">素</span><span class="mord cjk_fallback">密</span><span class="mord cjk_fallback">度</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.256709em;vertical-align:-0.25em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.006709em;"><span class="svg-align" style="top:-3.2em;"><span class="pstrut" style="height:3.2em;"></span><span class="mord" style="padding-left:1em;"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">t</span><span class="mord"><span class="mord mathdefault">h</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault">h</span><span class="mord mathdefault">e</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">h</span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span><span style="top:-2.9667090000000003em;"><span class="pstrut" style="height:3.2em;"></span><span class="hide-tail" style="min-width:1.02em;height:1.28em;"><svg width='400em' height='1.28em' viewBox='0 0 400000 1296' preserveAspectRatio='xMinYMin slice'><path d='M263,681c0.7,0,18,39.7,52,119c34,79.3,68.167,
+158.7,102.5,238c34.3,79.3,51.8,119.3,52.5,120c340,-704.7,510.7,-1060.3,512,-1067
+c4.7,-7.3,11,-11,19,-11H40000v40H1012.3s-271.3,567,-271.3,567c-38.7,80.7,-84,
+175,-136,283c-52,108,-89.167,185.3,-111.5,232c-22.3,46.7,-33.8,70.3,-34.5,71
+c-4.7,4.7,-12.3,7,-23,7s-12,-1,-12,-1s-109,-253,-109,-253c-72.7,-168,-109.3,
+-252,-110,-252c-10.7,8,-22,16.7,-34,26c-22,17.3,-33.3,26,-34,26s-26,-26,-26,-26
+s76,-59,76,-59s76,-60,76,-60z M1001 80H40000v40H1012z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.23329099999999992em;"><span></span></span></span></span></span><span class="mord">/</span><span class="mord cjk_fallback">屏</span><span class="mord cjk_fallback">幕</span><span class="mord cjk_fallback">尺</span><span class="mord cjk_fallback">寸</span></span></span></span></span></p>
+<h2 id="区分dpi和dip"><a class="markdownIt-Anchor" href="#区分dpi和dip"></a> 区分dpi和dip</h2>
+<p>dpi是像素密度，全称是dot per inch。dip是密度无关像素，全称是density independence pixels。</p>
+<h2 id="dipdpi与px的转换"><a class="markdownIt-Anchor" href="#dipdpi与px的转换"></a> dip,dpi与px的转换</h2>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mi>x</mi><mo>=</mo><mi>d</mi><mi>i</mi><mi>p</mi><mo>∗</mo><mo stretchy="false">(</mo><mi>d</mi><mi>p</mi><mi>i</mi><mi mathvariant="normal">/</mi><mn>160</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">px = dip * (dpi / 160)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">i</span><span class="mord mathdefault">p</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mord mathdefault">i</span><span class="mord">/</span><span class="mord">1</span><span class="mord">6</span><span class="mord">0</span><span class="mclose">)</span></span></span></span></span></p>
+<p>比如：1dip在160dpi的屏幕上显示为1px，在320dpi的屏幕上显示为2px。</p>
+<h1 id="屏幕适配"><a class="markdownIt-Anchor" href="#屏幕适配"></a> 屏幕适配</h1>
+<h2 id="为什么要屏幕适配"><a class="markdownIt-Anchor" href="#为什么要屏幕适配"></a> 为什么要屏幕适配？</h2>
+<p>在不同尺寸的设备上，ui控件尺寸显示不一。比如：同样是5.0英寸的屏幕，在320dpi的屏幕上显示32px,在480dpi的屏幕上就显示为48px。前者看起来就会比后者尺寸大。</p>
+<h2 id="适配后的效果"><a class="markdownIt-Anchor" href="#适配后的效果"></a> 适配后的效果</h2>
+<p>ui控件在不同设备上显示的尺寸与屏幕的比例保持一致。</p>
+<h2 id="如何适配"><a class="markdownIt-Anchor" href="#如何适配"></a> 如何适配</h2>
+<p>这里使用的是开源框架<a href="https://github.com/JessYanCoding/AndroidAutoSize" target="_blank" rel="noopener">AndroidAutoSize</a>。</p>
+<h3 id="添加依赖"><a class="markdownIt-Anchor" href="#添加依赖"></a> 添加依赖</h3>
+<pre class="highlight"><code class="groovy">implementation <span class="hljs-string">'me.jessyan:autosize:0.9.5'</span>
+</code></pre>
+<h3 id="配置androidmanifestxml"><a class="markdownIt-Anchor" href="#配置androidmanifestxml"></a> 配置AndroidManifest.xml</h3>
+<pre class="highlight"><code class="xml"><span class="hljs-comment">&lt;!-- 以宽或者高为基准，配置其一即可 --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">meta-data</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">"design_width_in_dp"</span>
+                 <span class="hljs-attr">android:value</span>=<span class="hljs-string">"360"</span>/&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">meta-data</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">"design_height_in_dp"</span>
+                 <span class="hljs-attr">android:value</span>=<span class="hljs-string">"640"</span>/&gt;</span>
 </code></pre>
 <p>如何去确定宽或者高的基准值？</p>
+<p>在蓝湖中查看</p>
+<p><img src="/img/lanhu_pixles.png" srcset="/img/loading.gif" alt="尺寸设置" /></p>
+<h3 id="框架原理"><a class="markdownIt-Anchor" href="#框架原理"></a> 框架原理</h3>
+<p>源码中有这样一个类<code>ActivityLifecycleCallbacksImpl</code>。这是<code>ActivityLifecycleCallbacks</code>的实现类。</p>
 
             <hr>
           </div>
