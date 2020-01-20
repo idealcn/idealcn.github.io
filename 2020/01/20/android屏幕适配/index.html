@@ -131,7 +131,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    736 字
+                    1.2k 字
                   </span>&nbsp;
                 
 
@@ -139,7 +139,7 @@
                   
                   &nbsp;<i class="far fa-clock"></i>
                   <span class="post-count">
-                      3 分钟
+                      4 分钟
                   </span>&nbsp;
                 
 
@@ -238,7 +238,7 @@ px = dip * (dpi / 160)</script><p>比如：1dip在160dpi的屏幕上显示为1px
         });
 
         mActivityLifecycleCallbacks = new ActivityLifecycleCallbacksImpl(strategy == null ? new DefaultAutoAdaptStrategy() : strategy);
-          //注册声明周期回调
+          //注册生命周期回调
         application.registerActivityLifecycleCallbacks(mActivityLifecycleCallbacks);
         return this;
     }
@@ -282,9 +282,45 @@ px = dip * (dpi / 160)</script><p>比如：1dip在160dpi的屏幕上显示为1px
 </li>
 </ol>
 <ol>
-<li></li>
+<li><p>全局配置属性</p>
+<pre><code class="lang-java">//是否全局按照宽度进行等比例适配。true：以宽度适配，false：以高度适配
+public AutoSizeConfig setBaseOnWidth(boolean baseOnWidth) ;
+//是否使用设备的实际尺寸做适配
+//useDeviceSize {@code true} 为使用设备的实际尺寸 (包含状态栏, 导航栏), {@code false} 为不使用 (不包含状态栏, 导航栏)
+public AutoSizeConfig setUseDeviceSize(boolean useDeviceSize);
+//设置屏幕适配逻辑策略类
+public AutoSizeConfig setAutoAdaptStrategy(AutoAdaptStrategy autoAdaptStrategy);
+</code></pre>
+</li>
 </ol>
-<p>源码中有这样一个类<code>ActivityLifecycleCallbacksImpl</code>。这是<code>ActivityLifecycleCallbacks</code>的实现类。框架的入口就在类<code>ActivityLifecycleCallbacksImpl</code>的方法<code>onActivityCreated</code>。</p>
+<p>源码中有这样一个类<code>ActivityLifecycleCallbacksImpl</code>。这是<code>ActivityLifecycleCallbacks</code>的实现类。在<code>AutoSizeConfig</code>的<code>init</code>方法中注册了这个类。</p>
+<p>屏幕适配的具体业务逻辑就在类<code>ActivityLifecycleCallbacksImpl</code>的方法<code>onActivityCreated</code>中通过<code>AutoAdaptStrategy</code>完成的。</p>
+<pre><code class="lang-java">@Override
+    public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+      //...
+        if (mAutoAdaptStrategy != null) {
+            mAutoAdaptStrategy.applyAdapt(activity, activity);
+        }
+    }
+</code></pre>
+<pre><code class="lang-java"> //DefaultAutoAdaptStrategy
+@Override
+    public void applyAdapt(Object target, Activity activity) {
+
+        //如果 target 实现 CustomAdapt 接口表示该 target 想自定义一些用于适配的参数, 从而改变最终的适配效果
+        if (target instanceof CustomAdapt) {         
+            AutoSize.autoConvertDensityOfCustomAdapt(activity, (CustomAdapt) target);
+        } else {            
+            AutoSize.autoConvertDensityOfGlobal(activity);
+        }
+    }
+</code></pre>
+<p>最终是通过<code>AutoSize</code>完成修改<code>DisplayMetrics</code>。具体代码就不再贴出来了。</p>
+<h1 id="几点总结"><a href="#几点总结" class="headerlink" title="几点总结"></a>几点总结</h1><p>使用<code>ConstraintLayout</code>能解决一些适配上的问题。</p>
+<h2 id="高度适配"><a href="#高度适配" class="headerlink" title="高度适配"></a>高度适配</h2><h3 id="滑动布局"><a href="#滑动布局" class="headerlink" title="滑动布局"></a>滑动布局</h3><p>按照常规设置宽高属性即可。</p>
+<h3 id="固定布局"><a href="#固定布局" class="headerlink" title="固定布局"></a>固定布局</h3><p>高度固定的布局(整个页面高度不超出当前屏幕高度)，在使用<code>ConstraintLayout</code>时，可以结合<code>layout_constraintHeight_percent</code>属性，设置布局高度相对于父布局的比例(数值在蓝湖设计图上有标注，windows下通过alt+鼠标左键查看，mac下通过option+鼠标左键查看)，同时<code>layout_height</code>要设置为<code>0dp</code>。</p>
+<p>如果高度占满父布局，直接设置<code>top</code>和<code>bottom</code>和父布局约束关系，设置<code>layout_height</code>为<code>0dp</code>即可。</p>
+<h2 id="宽度适配"><a href="#宽度适配" class="headerlink" title="宽度适配"></a>宽度适配</h2><p>如果宽度占满父布局，直接设置<code>left</code>和<code>right</code>和父布局约束关系，设置<code>layout_width</code>为<code>0dp</code>即可。</p>
 
             <hr>
           </div>
