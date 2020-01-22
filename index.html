@@ -107,7 +107,7 @@
 </nav>
 
     <div class="view intro-2" id="background"
-         style="background: url('/img/default.png')no-repeat center center;
+         style="background: url('/img/home_banner.png')no-repeat center center;
            background-size: cover;
            background-attachment: fixed;">
       <div class="full-bg-img">
@@ -140,6 +140,87 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/01/21/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B3%A8%E8%A7%A3%E5%A4%84%E7%90%86%E5%99%A8/">
+        <p class="h4 index-header">自定义注解处理器</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">在android-studio中创建java jar module。为什么要创建java lib module？因为在java中才能找到AbstractProcessor这个类。
+一个是lib_annotation，存放自定义的注解类。
+一个是lib_compiler，用于处理自定义注解。添加依赖包
+    annotationProcessor &#39;com.google.auto.service:auto-service:1.0-rc2&#39;
+
+</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-01-21&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/java,%E6%B3%A8%E8%A7%A3">java,注解</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/01/21/%E6%B3%A8%E8%A7%A3%E5%92%8C%E5%8F%8D%E5%B0%84%E5%9F%BA%E7%A1%80/">
+        <p class="h4 index-header">注解和反射基础.md</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">反射反射类型TypeType是个顶层接口类，它有几个子类和子接口。
+Class&lt;?&gt;TypeVariable&lt;D extends GenericDeclaration&gt;TypeVariable表示的是泛型类型T。
+GenericDeclaration表明泛型声明在哪里。泛型的声明一般在以下几个地方：
+类上声明泛型//在类上声明泛型T
+class Student&lt;T&gt; {
+
+}
+
+方法上声明泛型//方法上声明泛型T
+public &lt;T extends Student&gt; T get(){
+    return null;
+}
+
+Method method = clazz.getMethod(&quot;get&quot;);
+Type type = method.getGenericReturnType();
+//因为方法get的返回类型是泛型类型T，所以type的实际类型是TypeVariable,又因为这个泛型类型T是在方法上声明的
+TypeVariable&lt;Method&gt; typeVariable = (TypeVariab</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-01-21&nbsp;&nbsp;
+        
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/java,%E6%B3%A8%E8%A7%A3,%E5%8F%8D%E5%B0%84,%E6%B3%9B%E5%9E%8B">java,注解,反射,泛型</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
 
   <div class="row mb-4 mx-auto">
     
@@ -400,6 +481,32 @@ px = dip * (dpi / 160)比如：1dip在160dpi的屏幕上显示为1px，在320dpi
   </script>
 
 
+
+  
+
+  
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+              inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+              processEscapes: true,
+              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+          }
+      });
+
+      MathJax.Hub.Queue(function() {
+          var all = MathJax.Hub.getAllJax(), i;
+          for(i=0; i < all.length; i += 1) {
+              all[i].SourceElement().parentNode.className += ' has-jax';
+          }
+      });
+
+    </script>
+
+    <script src="https://cdn.staticfile.org/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML" ></script>
+
+  
 
 
 
