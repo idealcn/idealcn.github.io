@@ -14,7 +14,9 @@
     
     <tags>
       
-      <tag>java,注解</tag>
+      <tag>java</tag>
+      
+      <tag>注解</tag>
       
     </tags>
     
@@ -33,7 +35,13 @@
     
     <tags>
       
-      <tag>java,注解,反射,泛型</tag>
+      <tag>java</tag>
+      
+      <tag>注解</tag>
+      
+      <tag>反射</tag>
+      
+      <tag>泛型</tag>
       
     </tags>
     
