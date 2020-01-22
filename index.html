@@ -162,6 +162,16 @@
           <i class="iconfont icon-riqi2"></i>&nbsp;2020-01-21&nbsp;&nbsp;
         
         
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/java">java</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E6%B3%A8%E8%A7%A3">注解</a>&nbsp;
+          
         
       </div>
     </div>
@@ -194,7 +204,104 @@ public &lt;T extends Student&gt; T get(){
 Method method = clazz.getMethod(&quot;get&quot;);
 Type type = method.getGenericReturnType();
 //因为方法get的返回类型是泛型类型T，所以type的实际类型是TypeVariable,又因为这个泛型类型T是在方法上声明的
-TypeVariable&lt;Method&gt; typeVariable = (TypeVariab</div>
+TypeVariable&lt;Method&gt; typeVariable = (TypeVariable&lt;Method&gt;)type;
+
+构造函数声明泛型//构造函数声明泛型
+public &lt;T&gt; Student(T t){
+
+}
+
+
+//获取泛型类型T
+//因为构造函数的参数类型是泛型类型T，所以这里传入Object
+Constructor&lt;Student&gt; constructor = Student.class.getConstructor(Object.class);
+//返回构造函数上声明的泛型类型T的数组
+        TypeVariable&lt;Constructor&lt;Student&gt;&gt;[] typeParameters = constructor.getTypeParameters();
+
+
+Constructor和Method从Executable继承了方法getTypeParameters()。
+//返回方法上声明的泛型类型T的数组。
+TypeVariable&lt;Method&gt;[] typeParameters = method.getTypeParameters();
+
+
+WildcardType泛型通配符?
+GenericArrayTypeParameterizedTypeClassMethodgetDeclaredMethods(): 返回类自身的方法，包含public，protected，default和private。不包含继承来的方法。
+包含重写父类或者父接口的方法。
+getMethods():返回所有public的方法，包含自身和继承自父类和父接口的。
+Method method = clazz.getMethod(String methodName,Class&lt;?&gt;... parameterTypes)
+
+如果方法参数中包含泛型参数T,那么parameterTypes对应应当传入Object.class。如果泛型参数T有明确的父类型（也就是说其父类型不是泛型类型），那么应当传入父类型
+public &lt;T&gt; void get1(T t,String name){
+
+}
+public &lt;T extends People&gt; void get2(T t,String name){
+
+}
+public &lt;D,T extends D&gt; void get3(T t,String name){
+
+}
+
+//T是泛型类型，这里要传入Object
+Method methodGet1 = clazz.getMethod(&quot;get1&quot;,Object.class,String.class);
+//T的父类型是People，这里要传入People
+Method methodGet2 = clazz.getMethod(&quot;get2&quot;,People.class,String.class);
+//T的父类型仍然是泛型D，这里要传入Object
+Method methodGet3 = clazz.getMethod(&quot;get3&quot;,Object.class,String.class);
+
+方法返回值类型getGenericReturnType(): 返回方法返回值的实际类型。如果返回值类型为泛型T，就返回T。
+getReturnType()：返回方法返回值的类型。如果返回值类型为泛型T，返回java.lang.Object。
+public &lt;T&gt; T get(T t){
+    return t;
+}
+
+Method method;
+Type type = method.getGenericReturnType();//T
+Class&lt;?&gt; classType = method.getReturnType();//java.lang.Object
+
+方法参数Method method;
+Parameter[] parameters = method.getParameters();
+
+方法参数类型public &lt;T&gt; T get(T t,String name){
+    return t;
+}
+
+ Type[] genericParameterTypes = method.getGenericParameterTypes();//T,java.lang.String
+ Class&lt;?&gt;[] parameterTypes = method.getParameterTypes();//java.lang.Object,java.lang.String
+
+方法参数注解
+
+
+getGenericXXX()方法返回的是实际类型，如果是泛型就返回泛型类型。而getXXX()，遇到泛型类型就返回java.lang.Object。
+方法签名：方法的名字，方法的参数个数，参数类型，参数顺序。不包括方法返回值类型。
+
+Field 注解自定义的注解需要使用@interface声明。
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.METHOD,ElementType.PARAMETER})
+public @interface NotNull {
+  //定义属性value，default添加默认的属性值
+    boolean value() default false;
+}
+
+RetentionRetention表明这个注解可以保留多久。一共有三种情况：
+
+RetentionPolicy.SOURCE编译器不会处理。
+,RetentionPolicy.CLASS,默认行为。会被编译器保留在字节码中，但不会被虚拟机保留在运行期。
+RetentionPolicy.RUMTIME被编译器保留在字节码中，被虚拟机保留在运行期。因此可以被反射读取到。如果需要读取自定义注解，需要给自定义注解设置这个保留期。
+
+Target注解可以适用于的场景。比如为类添加注解，为方法添加注解等。在ElementType中定义。
+
+TYPE适用于类，接口(包括注解类)，枚举类。
+FIELD适用于成员变量。
+METHOD适用于方法。
+PARAMETER适用于方法参数。
+CONSTRUCTOR适用于构造函数。
+LOCAL_VARIABLE适用于局部变量
+ANNOTATION_TYPE适用于注解类型。
+PACKAGE在包上声明
+TYPE_PARAMETER和TYPE_USE从java8开始，暂时没用过。
+
+</div>
         </div>
       </a>
 
@@ -203,6 +310,20 @@ TypeVariable&lt;Method&gt; typeVariable = (TypeVariab</div>
           <i class="iconfont icon-riqi2"></i>&nbsp;2020-01-21&nbsp;&nbsp;
         
         
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/java">java</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E6%B3%A8%E8%A7%A3">注解</a>&nbsp;
+          
+            <a href="/tags/%E6%B3%9B%E5%9E%8B">泛型</a>&nbsp;
+          
+            <a href="/tags/%E5%8F%8D%E5%B0%84">反射</a>&nbsp;
+          
         
       </div>
     </div>
@@ -253,7 +374,147 @@ dip,dpi与px的转换
 px = dip * (dpi / 160)比如：1dip在160dpi的屏幕上显示为1px，在320dpi的屏幕上显示为2px。
 屏幕适配为什么要屏幕适配？在不同尺寸的设备上，ui控件尺寸显示不一。比如：同样是5.0英寸的屏幕，在320dpi的屏幕上显示32px,在480dpi的屏幕上就显示为48px。前者看起来就会比后者尺寸大。
 适配后的效果ui控件在不同设备上显示的尺寸与屏幕的比例保持一致。
-如何适配这里使用的是开源框架AndroidAuto</div>
+如何适配这里使用的是开源框架AndroidAutoSize。
+添加依赖implementation &#39;me.jessyan:autosize:0.9.5&#39;
+
+配置AndroidManifest.xml&lt;!-- 以宽或者高为基准，配置其一即可 --&gt;
+&lt;meta-data android:name=&quot;design_width_in_dp&quot;
+                 android:value=&quot;360&quot;/&gt;
+      &lt;meta-data android:name=&quot;design_height_in_dp&quot;
+                 android:value=&quot;640&quot;/&gt;
+
+如何去确定宽或者高的基准值？
+在蓝湖中查看
+
+框架原理源码中定义了InitProvider，继承自ContentProvider。并在AndroidManifest.xml中声明了InitProvider。
+App启动时，会自动加载InitProvider。其onCreate方法就会被调用。
+@Override
+    public boolean onCreate() {
+        AutoSizeConfig.getInstance()
+                .setLog(true)
+                .init((Application) getContext().getApplicationContext())
+                .setUseDeviceSize(false);
+        return true;
+    }
+
+AutoSizeConfig的init方法被调用。
+AutoSizeConfig init(final Application application, boolean isBaseOnWidth, AutoAdaptStrategy strategy) {
+       //省略不必要的代码。。。
+
+        final DisplayMetrics displayMetrics = Resources.getSystem().getDisplayMetrics();
+                //读取清单中配置的设计图的尺寸
+        getMetaData(application);
+              //通过WindowManager获取宽高
+        int[] screenSize = ScreenUtils.getScreenSize(application);
+        mScreenWidth = screenSize[0];
+        mScreenHeight = screenSize[1];
+
+                //和屏幕尺寸相关的初始值
+        mInitDensity = displayMetrics.density;
+        mInitDensityDpi = displayMetrics.densityDpi;
+        mInitScaledDensity = displayMetrics.scaledDensity;
+        mInitXdpi = displayMetrics.xdpi;
+        application.registerComponentCallbacks(new ComponentCallbacks() {
+            @Override
+            public void onConfigurationChanged(Configuration newConfig) {
+                if (newConfig != null) {                 
+                    int[] screenSize = ScreenUtils.getScreenSize(application);
+                    mScreenWidth = screenSize[0];
+                    mScreenHeight = screenSize[1];
+                }
+            }
+
+            @Override
+            public void onLowMemory() {
+
+            }
+        });
+
+        mActivityLifecycleCallbacks = new ActivityLifecycleCallbacksImpl(strategy == null ? new DefaultAutoAdaptStrategy() : strategy);
+          //注册生命周期回调
+        application.registerActivityLifecycleCallbacks(mActivityLifecycleCallbacks);
+        return this;
+    }
+
+AutoSizeConfig主要职责：
+
+获取和屏幕尺寸相关的属性值
+ /**
+     * 最初的 {@link DisplayMetrics#density}
+     */
+    private float mInitDensity = -1;
+    /**
+     * 最初的 {@link DisplayMetrics#densityDpi}
+     */
+    private int mInitDensityDpi;
+    /**
+     * 最初的 {@link DisplayMetrics#scaledDensity}
+     */
+    private float mInitScaledDensity;
+    /**
+     * 最初的 {@link DisplayMetrics#xdpi}
+     */
+    private float mInitXdpi;
+    /**
+     * 设计图上的总宽度, 单位 dp
+     */
+    private int mDesignWidthInDp;
+
+    //设计图上的总高度, 单位 dp     
+    private int mDesignHeightInDp;
+    /**
+     * 设备的屏幕总宽度, 单位 px
+     */
+    private int mScreenWidth;
+    /**
+     * 设备的屏幕总高度, 单位 px, 如果 {@link #isUseDeviceSize} 为 {@code false}, 屏幕总高度会减去状态栏的高度
+     * 如果有导航栏也会减去导航栏的高度
+     */
+    private int mScreenHeight;
+
+
+
+
+全局配置属性
+//是否全局按照宽度进行等比例适配。true：以宽度适配，false：以高度适配
+public AutoSizeConfig setBaseOnWidth(boolean baseOnWidth) ;
+//是否使用设备的实际尺寸做适配
+//useDeviceSize {@code true} 为使用设备的实际尺寸 (包含状态栏, 导航栏), {@code false} 为不使用 (不包含状态栏, 导航栏)
+public AutoSizeConfig setUseDeviceSize(boolean useDeviceSize);
+//设置屏幕适配逻辑策略类
+public AutoSizeConfig setAutoAdaptStrategy(AutoAdaptStrategy autoAdaptStrategy);
+
+
+
+源码中有这样一个类ActivityLifecycleCallbacksImpl。这是ActivityLifecycleCallbacks的实现类。在AutoSizeConfig的init方法中注册了这个类。
+屏幕适配的具体业务逻辑就在类ActivityLifecycleCallbacksImpl的方法onActivityCreated中通过AutoAdaptStrategy完成的。
+@Override
+    public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+      //...
+        if (mAutoAdaptStrategy != null) {
+            mAutoAdaptStrategy.applyAdapt(activity, activity);
+        }
+    }
+
+ //DefaultAutoAdaptStrategy
+@Override
+    public void applyAdapt(Object target, Activity activity) {
+
+        //如果 target 实现 CustomAdapt 接口表示该 target 想自定义一些用于适配的参数, 从而改变最终的适配效果
+        if (target instanceof CustomAdapt) {         
+            AutoSize.autoConvertDensityOfCustomAdapt(activity, (CustomAdapt) target);
+        } else {            
+            AutoSize.autoConvertDensityOfGlobal(activity);
+        }
+    }
+
+最终是通过AutoSize完成修改DisplayMetrics。具体代码就不再贴出来了。
+几点总结使用ConstraintLayout能解决一些适配上的问题。
+高度适配滑动布局按照常规设置宽高属性即可。
+固定布局高度固定的布局(整个页面高度不超出当前屏幕高度)，在使用ConstraintLayout时，可以结合layout_constraintHeight_percent属性，设置布局高度相对于父布局的比例(数值在蓝湖设计图上有标注，windows下通过alt+鼠标左键查看，mac下通过option+鼠标左键查看)，同时layout_height要设置为0dp。
+如果高度占满父布局，直接设置top和bottom和父布局约束关系，设置layout_height为0dp即可。
+宽度适配如果宽度占满父布局，直接设置left和right和父布局约束关系，设置layout_width为0dp即可。
+</div>
         </div>
       </a>
 
@@ -262,6 +523,16 @@ px = dip * (dpi / 160)比如：1dip在160dpi的屏幕上显示为1px，在320dpi
           <i class="iconfont icon-riqi2"></i>&nbsp;2020-01-20&nbsp;&nbsp;
         
         
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android">Android</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E5%B1%8F%E5%B9%95%E9%80%82%E9%85%8D">屏幕适配</a>&nbsp;
+          
         
       </div>
     </div>
