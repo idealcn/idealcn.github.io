@@ -141,6 +141,77 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/01/23/%E5%8F%8D%E5%B0%84%E4%B9%8BType/">
+        <p class="h4 index-header">反射之Type</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">概览Type是个顶层接口类，它有几个子类和子接口。
+
+
+
+
+Type
+WildcardType
+ParameterizedType
+TypeVariable
+GenericArrayType
+Class&lt;?&gt;
+
+
+
+
+getTypeName() : String
+getLowerBounds() : Type[]
+getActualTypeArguments() : Type[]
+getBounds() : Type[]
+getGenericComponentType() :Type
+native isPrimitive() : boolean
+
+
+
+getUpperBounds() : Type[]
+getRawType() : Type
+getGenericDeclaration() : D
+
+isArray(),isInterface(), isInstance(Object),  isAnnotation(),  isSynthetic(),
+
+
+
+
+getOwnerType() : Type
+getName() : String
+
+getTypeParameters(): TypeVariable</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-01-23&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/java">java</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E5%8F%8D%E5%B0%84">反射</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2020/01/21/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B3%A8%E8%A7%A3%E5%A4%84%E7%90%86%E5%99%A8/">
         <p class="h4 index-header">自定义注解处理器</p>
         
@@ -188,44 +259,7 @@
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">反射反射类型TypeType是个顶层接口类，它有几个子类和子接口。
-Class&lt;?&gt;TypeVariable&lt;D extends GenericDeclaration&gt;TypeVariable表示的是泛型类型T。
-GenericDeclaration表明泛型声明在哪里。泛型的声明一般在以下几个地方：
-类上声明泛型//在类上声明泛型T
-class Student&lt;T&gt; {
-
-}
-
-方法上声明泛型//方法上声明泛型T
-public &lt;T extends Student&gt; T get(){
-    return null;
-}
-
-Method method = clazz.getMethod(&quot;get&quot;);
-Type type = method.getGenericReturnType();
-//因为方法get的返回类型是泛型类型T，所以type的实际类型是TypeVariable,又因为这个泛型类型T是在方法上声明的
-TypeVariable&lt;Method&gt; typeVariable = (TypeVariable&lt;Method&gt;)type;
-
-构造函数声明泛型//构造函数声明泛型
-public &lt;T&gt; Student(T t){
-
-}
-
-
-//获取泛型类型T
-//因为构造函数的参数类型是泛型类型T，所以这里传入Object
-Constructor&lt;Student&gt; constructor = Student.class.getConstructor(Object.class);
-//返回构造函数上声明的泛型类型T的数组
-        TypeVariable&lt;Constructor&lt;Student&gt;&gt;[] typeParameters = constructor.getTypeParameters();
-
-
-Constructor和Method从Executable继承了方法getTypeParameters()。
-//返回方法上声明的泛型类型T的数组。
-TypeVariable&lt;Method&gt;[] typeParameters = method.getTypeParameters();
-
-
-WildcardType泛型通配符?
-GenericArrayTypeParameterizedTypeClassMethodgetDeclaredMethods(): 返回类自身的方法，包含public，protected，default和private。不包含继承来的方法。
+          <div class="index-text mb-1">反射MethodgetDeclaredMethods(): 返回类自身的方法，包含public，protected，default和private。不包含继承来的方法。
 包含重写父类或者父接口的方法。
 getMethods():返回所有public的方法，包含自身和继承自父类和父接口的。
 Method method = clazz.getMethod(String methodName,Class&lt;?&gt;... parameterTypes)
@@ -318,11 +352,11 @@ TYPE_PARAMETER和TYPE_USE从java8开始，暂时没用过。
         
           <i class="iconfont icon-tag"></i>
           
+            <a href="/tags/%E5%8F%8D%E5%B0%84">反射</a>&nbsp;
+          
             <a href="/tags/%E6%B3%A8%E8%A7%A3">注解</a>&nbsp;
           
             <a href="/tags/%E6%B3%9B%E5%9E%8B">泛型</a>&nbsp;
-          
-            <a href="/tags/%E5%8F%8D%E5%B0%84">反射</a>&nbsp;
           
         
       </div>
