@@ -16,7 +16,7 @@
   <meta name="description" content="记录技术成长，人生成长">
   <meta name="author" content="ideal">
   <meta name="keywords" content="">
-  <title>自定义注解处理器 ~ 小毛球的狗窝</title>
+  <title>java注解 ~ 小毛球的狗窝</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
@@ -122,7 +122,7 @@
               
                 <p class="mt-3">
                   <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
-                  星期二, 一月 21日 2020, 8:10 晚上
+                  星期四, 一月 23日 2020, 6:08 晚上
                 </p>
               
 
@@ -131,7 +131,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    72 字
+                    272 字
                   </span>&nbsp;
                 
 
@@ -172,11 +172,32 @@
       <div class="py-5 z-depth-3" id="board">
         <div class="post-content mx-auto" id="post">
           <div class="markdown-body">
-            <p>在android-studio中创建java jar module。为什么要创建java lib module？因为在java中才能找到AbstractProcessor这个类。</p>
-<p>一个是lib_annotation，存放自定义的注解类。</p>
-<p>一个是lib_compiler，用于处理自定义注解。添加依赖包</p>
-<pre><code class="lang-groovy">    annotationProcessor &#39;com.google.auto.service:auto-service:1.0-rc2&#39;
+            <h1 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h1><p>自定义的注解需要使用<code>@interface</code>声明。</p>
+<pre><code class="lang-java">@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.METHOD,ElementType.PARAMETER})
+public @interface NotNull {
+  //定义属性value，default添加默认的属性值
+    boolean value() default false;
+}
 </code></pre>
+<h2 id="Retention"><a href="#Retention" class="headerlink" title="Retention"></a>Retention</h2><p><code>Retention</code>表明这个注解可以保留多久。一共有三种情况：</p>
+<ol>
+<li><code>RetentionPolicy.SOURCE</code><br>编译器不会处理。</li>
+<li>,<code>RetentionPolicy.CLASS</code>,<br>默认行为。会被编译器保留在字节码中，但不会被虚拟机保留在运行期。</li>
+<li><code>RetentionPolicy.RUMTIME</code><br>被编译器保留在字节码中，被虚拟机保留在运行期。<strong>因此可以被反射读取到。如果需要读取自定义注解，需要给自定义注解设置这个保留期。</strong></li>
+</ol>
+<h2 id="Target"><a href="#Target" class="headerlink" title="Target"></a>Target</h2><p>注解可以适用于的场景。比如为类添加注解，为方法添加注解等。在<code>ElementType</code>中定义。</p>
+<ol>
+<li><code>TYPE</code><br>适用于类，接口(包括注解类)，枚举类。</li>
+<li><code>FIELD</code><br>适用于成员变量。</li>
+<li><code>METHOD</code><br>适用于方法。</li>
+<li><code>PARAMETER</code><br>适用于方法参数。</li>
+<li><code>CONSTRUCTOR</code><br>适用于构造函数。</li>
+<li><code>LOCAL_VARIABLE</code><br>适用于局部变量</li>
+<li><code>ANNOTATION_TYPE</code><br>适用于注解类型。</li>
+<li><code>PACKAGE</code><br>在包上声明</li>
+<li><code>TYPE_PARAMETER</code>和<code>TYPE_USE</code><br>从java8开始，暂时没用过。</li>
+</ol>
 
             <hr>
           </div>
@@ -368,7 +389,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "自定义注解处理器&nbsp;",
+        "java注解&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

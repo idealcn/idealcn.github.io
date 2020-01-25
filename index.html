@@ -141,6 +141,67 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/01/23/java%E6%B3%A8%E8%A7%A3/">
+        <p class="h4 index-header">java注解</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">注解自定义的注解需要使用@interface声明。
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.METHOD,ElementType.PARAMETER})
+public @interface NotNull {
+  //定义属性value，default添加默认的属性值
+    boolean value() default false;
+}
+
+RetentionRetention表明这个注解可以保留多久。一共有三种情况：
+
+RetentionPolicy.SOURCE编译器不会处理。
+,RetentionPolicy.CLASS,默认行为。会被编译器保留在字节码中，但不会被虚拟机保留在运行期。
+RetentionPolicy.RUMTIME被编译器保留在字节码中，被虚拟机保留在运行期。因此可以被反射读取到。如果需要读取自定义注解，需要给自定义注解设置这个保留期。
+
+Target注解可以适用于的场景。比如为类添加注解，为方法添加注解等。在ElementType中定义。
+
+TYPE适用于类，接口(包括注解类)，枚举类。
+FIELD适用于成员变量。
+METHOD适用于方法。
+PARAMETER适用于方法参数。
+CONSTRUCTOR适用于构造函数。
+LOCAL_VARIABLE适用于局部变量
+ANNOTATION_TYPE适用于注解类型。
+PACKAGE在包上声明
+TYPE_PARAMETER和TYPE_USE从java8开始，暂时没用过。
+
+</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-01-23&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/java">java</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E6%B3%A8%E8%A7%A3">注解</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2020/01/23/%E5%8F%8D%E5%B0%84%E4%B9%8BType/">
         <p class="h4 index-header">反射之Type</p>
         
@@ -168,7 +229,7 @@ getLowerBounds() : Type[]
 getActualTypeArguments() : Type[]
 getBounds() : Type[]
 getGenericComponentType() :Type
-native isPrimitive() : boolean
+isPrimitive() : boolean,isArray(),isInterface(), isInstance(Object),  isAnnotation(),  isSynthetic(),
 
 
 
@@ -176,7 +237,7 @@ getUpperBounds() : Type[]
 getRawType() : Type
 getGenericDeclaration() : D
 
-isArray(),isInterface(), isInstance(Object),  isAnnotation(),  isSynthetic(),
+
 
 
 
@@ -212,56 +273,99 @@ getTypeParameters(): TypeVariable</div>
     
     
     <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/01/21/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B3%A8%E8%A7%A3%E5%A4%84%E7%90%86%E5%99%A8/">
-        <p class="h4 index-header">自定义注解处理器</p>
+      <a href="/2020/01/21/%E5%8F%8D%E5%B0%84%E5%9F%BA%E7%A1%80/">
+        <p class="h4 index-header">反射基础.md</p>
         
         
           
         
         <div class="index-excerpt" >
-          <div class="index-text mb-1">在android-studio中创建java jar module。为什么要创建java lib module？因为在java中才能找到AbstractProcessor这个类。
-一个是lib_annotation，存放自定义的注解类。
-一个是lib_compiler，用于处理自定义注解。添加依赖包
-    annotationProcessor &#39;com.google.auto.service:auto-service:1.0-rc2&#39;
+          <div class="index-text mb-1">首先需要获取到Class对象。
+获取Class对象有两种获取方式：
+通过类，接口或者枚举类名去获取，基本变量类型也可以。
+Class&lt;Student&gt; clazz = Student.class;
+Class&lt;Integer&gt; intClazz = int.class;
 
-</div>
-        </div>
-      </a>
+通过变量名去获取(变量的类型一定是对象类型，基本变量不可以)
+Student student;
+Class&lt;?&gt; clazz = student.getClass();
 
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-01-21&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/java">java</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/%E6%B3%A8%E8%A7%A3">注解</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
+ConstructorClass中定义了多个获取Constructor的方法。
 
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/01/21/%E6%B3%A8%E8%A7%A3%E5%92%8C%E5%8F%8D%E5%B0%84%E5%9F%BA%E7%A1%80/">
-        <p class="h4 index-header">注解和反射基础.md</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">反射MethodgetDeclaredMethods(): 返回类自身的方法，包含public，protected，default和private。不包含继承来的方法。
-包含重写父类或者父接口的方法。
-getMethods():返回所有public的方法，包含自身和继承自父类和父接口的。
+
+
+
+方法
+返回类型
+方法释义
+
+
+
+
+getConstructor(Class&lt;?&gt;… parameterTypes)
+Constructor
+返回指定参数对应的构造函数（public权限的）
+
+
+getConstructors()
+Constructor&lt;?&gt;[]
+返回构造函数的数组  （public权限的）
+
+
+getDeclaredConstructor(Class&lt;?&gt;… parameterTypes)
+Constructor
+返回指定参数对应的构造函数(包含public,private,protected,default权限的)
+
+
+getDeclaredConstructors()
+Constructor&lt;?&gt;[]
+返回构造函数的数组  （包含public,private,protected,default权限的）
+
+
+
+
+
+构造函数的参数如果为基本类型，比如int，就直接传入int.class。
+
+MethodClass定义了多个获取Method的方法。
+
+
+
+
+方法
+返回类型
+方法释义
+
+
+
+
+getMethods()
+Method[]
+public权限的方法，包含继承自父类(接口)的。
+
+
+getDeclaredMethod(String name, Class&lt;?&gt;… parameterTypes)
+Method
+获取自身方法名为name的方法，该方法可为protected,public,private,default权限。
+
+
+getDeclaredMethods()
+Method[]
+获取自身所有的方法，该方法可为protected,public,private,default权限。
+
+
+getEnclosingMethod
+Method
+方法返回的是个抽象类（接口）对象。比如方法内实例化了一个接口或者抽象类，并返回。
+
+
+getMethod(String name, Class&lt;?&gt;… parameterTypes)
+Method
+获取自身方法名为name的public权限的方法
+
+
+
+
 Method method = clazz.getMethod(String methodName,Class&lt;?&gt;... parameterTypes)
 
 如果方法参数中包含泛型参数T,那么parameterTypes对应应当传入Object.class。如果泛型参数T有明确的父类型（也就是说其父类型不是泛型类型），那么应当传入父类型
@@ -282,15 +386,42 @@ Method methodGet2 = clazz.getMethod(&quot;get2&quot;,People.class,String.class);
 //T的父类型仍然是泛型D，这里要传入Object
 Method methodGet3 = clazz.getMethod(&quot;get3&quot;,Object.class,String.class);
 
-方法返回值类型getGenericReturnType(): 返回方法返回值的实际类型。如果返回值类型为泛型T，就返回T。
-getReturnType()：返回方法返回值的类型。如果返回值类型为泛型T，返回java.lang.Object。
+方法返回值类型
+
+
+
+方法
+返回值类型
+方法释义
+
+
+
+
+getReturnType
+Class&lt;?&gt;
+方法返回值的Class类型对象，如果返回值为泛型T，就返回Object。
+
+
+getGenericReturnType
+Type
+方法返回值的Type类型对象，如果返回值为泛型T，就返回T。
+
+
+getTypeParameters
+TypeVariable       &lt;Method&gt;[]
+方法上声明的泛型类型。比如：T
+
+
+
+
 public &lt;T&gt; T get(T t){
     return t;
 }
 
 Method method;
-Type type = method.getGenericReturnType();//T
+Type type = method.getGenericReturnType();//T  --&gt; TypeVariable
 Class&lt;?&gt; classType = method.getReturnType();//java.lang.Object
+TypeVariable&lt;Method&gt;[] typeParameters = method.getTypeParameters();
 
 方法参数Method method;
 Parameter[] parameters = method.getParameters();
@@ -302,39 +433,13 @@ Parameter[] parameters = method.getParameters();
  Type[] genericParameterTypes = method.getGenericParameterTypes();//T,java.lang.String
  Class&lt;?&gt;[] parameterTypes = method.getParameterTypes();//java.lang.Object,java.lang.String
 
-方法参数注解
+方法参数注解//方法注解
+Annotation[][] parameterAnnotations = method.getParameterAnnotations();
 
 
-getGenericXXX()方法返回的是实际类型，如果是泛型就返回泛型类型。而getXXX()，遇到泛型类型就返回java.lang.Object。
 方法签名：方法的名字，方法的参数个数，参数类型，参数顺序。不包括方法返回值类型。
 
-Field 注解自定义的注解需要使用@interface声明。
-
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.METHOD,ElementType.PARAMETER})
-public @interface NotNull {
-  //定义属性value，default添加默认的属性值
-    boolean value() default false;
-}
-
-RetentionRetention表明这个注解可以保留多久。一共有三种情况：
-
-RetentionPolicy.SOURCE编译器不会处理。
-,RetentionPolicy.CLASS,默认行为。会被编译器保留在字节码中，但不会被虚拟机保留在运行期。
-RetentionPolicy.RUMTIME被编译器保留在字节码中，被虚拟机保留在运行期。因此可以被反射读取到。如果需要读取自定义注解，需要给自定义注解设置这个保留期。
-
-Target注解可以适用于的场景。比如为类添加注解，为方法添加注解等。在ElementType中定义。
-
-TYPE适用于类，接口(包括注解类)，枚举类。
-FIELD适用于成员变量。
-METHOD适用于方法。
-PARAMETER适用于方法参数。
-CONSTRUCTOR适用于构造函数。
-LOCAL_VARIABLE适用于局部变量
-ANNOTATION_TYPE适用于注解类型。
-PACKAGE在包上声明
-TYPE_PARAMETER和TYPE_USE从java8开始，暂时没用过。
-
+FieldParameterField和Parameter和上面的都差不多，暂时不列出了。
 </div>
         </div>
       </a>
@@ -354,35 +459,6 @@ TYPE_PARAMETER和TYPE_USE从java8开始，暂时没用过。
           
             <a href="/tags/%E5%8F%8D%E5%B0%84">反射</a>&nbsp;
           
-            <a href="/tags/%E6%B3%A8%E8%A7%A3">注解</a>&nbsp;
-          
-            <a href="/tags/%E6%B3%9B%E5%9E%8B">泛型</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2020/01/20/android%E6%9D%83%E9%99%90%E5%A4%84%E7%90%86/">
-        <p class="h4 index-header">android权限处理</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1"></div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2020-01-20&nbsp;&nbsp;
-        
-        
         
       </div>
     </div>
