@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="description" content="记录技术成长，人生成长">
+  <meta name="author" content="ideal">
+  <meta name="keywords" content="">
+  <title>应用内更新App ~ 小毛球的狗窝</title>
+
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
+<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
+<link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css"  >
+<link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css"  >
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css"  >
+
+<link rel="stylesheet" href="/css/main.css"  >
+
+
+  <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.min.css"  >
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>小毛球的狗窝</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background"
+         style="background: url('/img/default.png')no-repeat center center;
+           background-size: cover;
+           background-attachment: fixed;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  星期日, 一月 26日 2020, 1:10 凌晨
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    957 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      4 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <p>需要三步：</p>
+<ul>
+<li>6.0 动态申请存储权限</li>
+<li>7.0 通过<code>FileProvider</code>创建<code>uri</code></li>
+<li>8.0 需要申请【安装未知来源应用权限】</li>
+</ul>
+<p>应用内更新<code>App</code>，在将下载的<code>App</code>保存到本地时，肯定要先处理申请存储权限。这里不提。</p>
+<p>当安装App时，需要提供本地App的存储路径。在不同的<code>Android</code>版本上会有不同的提供方式。</p>
+<h2 id="FileProvider"><a href="#FileProvider" class="headerlink" title="FileProvider"></a>FileProvider</h2><p><code>Android 7（API24）</code>开始使用<code>FileProvider</code>共享应用内的文件。向外界暴露一个安全的文件<code>Uri</code>(格式：”content:// “  代替以前的 “file://“)。</p>
+<h3 id="声明FileProvider"><a href="#声明FileProvider" class="headerlink" title="声明FileProvider"></a>声明FileProvider</h3><p>在<code>AndroidManifest.xml</code>中声明一个<code>FileProvider</code>。</p>
+<pre><code class="lang-xml"> &lt;manifest xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+        package=&quot;your app PackageName&quot;&gt;
+        &lt;application
+            ...&gt;
+            &lt;provider
+                android:name=&quot;android.support.v4.content.FileProvider&quot;
+                android:authorities=&quot;${your app PackageName}.fileprovider&quot;
+                android:grantUriPermissions=&quot;true&quot;
+                android:exported=&quot;false&quot;&gt;
+                &lt;meta-data
+                    android:name=&quot;android.support.FILE_PROVIDER_PATHS&quot;
+                    android:resource=&quot;@xml/filepaths&quot; /&gt;
+            &lt;/provider&gt;
+            ...
+        &lt;/application&gt;
+    &lt;/manifest&gt;
+</code></pre>
+<p><code>android:exported=false</code>;不应该将<code>FileProvider</code>设置成<code>public</code>。</p>
+<p><code>android:grantUriPermissions=true</code>;授予临时获取文件的权限。</p>
+<p><code>&lt;meta-data&gt;</code>子元素指向一个<code>XML</code>文件，该文件指定您要共享的目录。<code>android:resource</code>属性是该文件的路径和名称，不包含 <code>.xml</code>扩展名。</p>
+<h3 id="指定可共享的目录"><a href="#指定可共享的目录" class="headerlink" title="指定可共享的目录"></a>指定可共享的目录</h3><p>如何指定共享文件的路径？<strong>只能在res/xml目录下创建filepaths.xml文件来配置共享文件路径。</strong></p>
+<pre><code class="lang-xml">&lt;paths&gt;
+
+  &lt;!-- 至少要包含以下一种 --&gt;
+
+  &lt;!-- Context.getFilesDir() --&gt;
+  &lt;files-path path=&quot;images/&quot; name=&quot;myimages&quot; /&gt;
+
+  &lt;!-- Context.getCacheDir() --&gt;
+  &lt;cache-path name=&quot;name&quot; path=&quot;path&quot; /&gt;
+
+  &lt;!-- Environment.getExternalStorageDirectory() --&gt;
+  &lt;external-path name=&quot;name&quot; path=&quot;path&quot; /&gt;
+
+  &lt;!-- Context.getExternalFilesDir(String)和Context.getExternalFilesDir(null) --&gt;
+  &lt;external-files-path name=&quot;name&quot; path=&quot;path&quot; /&gt;
+
+  &lt;!-- Context.getExternalCacheDir() --&gt;
+  &lt;external-cache-path name=&quot;name&quot; path=&quot;path&quot; /&gt;
+
+  &lt;!-- Context.getExternalMediaDirs()  API 21+  --&gt;
+  &lt;external-media-path name=&quot;name&quot; path=&quot;path&quot; /&gt;
+
+&lt;/paths&gt;
+</code></pre>
+<pre><code class="lang-xml"> &lt;files-path path=&quot;images/&quot; name=&quot;myimages&quot; /&gt;
+</code></pre>
+<p> <code>&lt;files-path&gt;</code>标记共享了应用内部存储的 <code>files/</code> 目录中的目录( <code>/data/user/0/com.ideal.file.study/files</code>   )。path 属性共享了 <code>files/</code>的<code>images/</code>子目录。<code>name</code> 属性指示 <code>FileProvider</code> 将路径段 <code>myimages</code> 添加到 <code>files/images/</code> 子目录中文件的内容 <code>URI</code>中。属于内部存储区域，通过<code>context.getFilesDir()</code>获取。</p>
+<p>对上面的<code>name</code>和<code>path</code>做个解释。</p>
+<pre><code class="lang-xml"> &lt;files-path
+        name=&quot;files&quot;
+        path=&quot;Download&quot;/&gt;
+
+    &lt;files-path
+        name=&quot;files&quot;
+        path=&quot;file&quot;/&gt;
+
+    &lt;files-path
+        name=&quot;file&quot;
+        path=&quot;file1&quot;/&gt;
+
+    &lt;files-path
+        name=&quot;f&quot;
+        path=&quot;file12&quot;/&gt;
+</code></pre>
+<p>首先<code>files-path</code>指定的是<code>data/user/0/packagename/files</code>下的路径。<code>name</code>和<code>path</code>相当于我们常说的键值对<code>key-value</code>。因此<code>name</code>可以指定任意合法的值。<code>path</code>就是要创建的文件的子路径。也就是<code>data/user/0/packagename/files</code>的下一级路径。所以最终文件的路径就是<code>data/user/0/packagename/files/${path}/filename</code>。</p>
+<p>在代码中要创建这个文件路径,使用的是<code>path</code>而不是<code>name</code>：</p>
+<pre><code class="lang-kotlin">  val filePath = File(filesDir,&quot;${path}&quot;)
+</code></pre>
+<h3 id="生成共享文件的URI"><a href="#生成共享文件的URI" class="headerlink" title="生成共享文件的URI"></a>生成共享文件的URI</h3><pre><code class="lang-kotlin">val uri : Uri = FilePRovider.getUriForFile(context,authorities,file)
+</code></pre>
+<p>其中<code>authorities</code>就是我们在清单文件中声明的。</p>
+<h3 id="授予临时权限"><a href="#授予临时权限" class="headerlink" title="授予临时权限"></a>授予临时权限</h3><p>安装App时，使用<code>FileProvider</code>需要授予临时权限。</p>
+<pre><code class="lang-kotlin">intent.flags = Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION  //读的权限
+Intent.FLAG_GRANT_WRITE_URI_PERMISSION //写的权限
+Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION //与上面的两个权限组合使用
+Intent.FLAG_GRANT_PREFIX_URI_PERMISSION // 与前面两个组合使用
+</code></pre>
+<h3 id="安装时申请未知来源权限-API26-android8-0"><a href="#安装时申请未知来源权限-API26-android8-0" class="headerlink" title="安装时申请未知来源权限(API26,android8.0)"></a>安装时申请未知来源权限(API26,android8.0)</h3><pre><code class="lang-kotlin">
+if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O){
+    //判断是否授予了允许安装未知来源App的权限
+  if (!packageManager.canRequestPackageInstalls()){
+        val packageUri = Uri.parse(&quot;package: $file-absolutePath&quot;)
+    val intent =  Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES,packageUri)
+    startActivityForResult(intent,requestCode)
+    }else {
+    installApk()
+  }
+}else {
+  installApk()
+}
+</code></pre>
+<h2 id="安装Apk"><a href="#安装Apk" class="headerlink" title="安装Apk"></a>安装Apk</h2><pre><code class="lang-kotlin">fun installApk(){
+  //7.0开始使用FileProvider 
+    if (Build.VERSION_CODES.N &lt;= Build.VERSION.SDK_INT){
+    val apkUri = FileProvider.getUriForFile(this,
+                        &quot;${application_id}.fileprovider&quot;, file)
+    intent.flags = Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION
+    intent.setDataAndType(apkUri, &quot;application/vnd.android.package-archive&quot;)
+  }else{
+    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    var apkUri = Uri.fromFile(file);
+    intent.setDataAndType(apkUri, &quot;application/vnd.android.package-archive&quot;);
+  }
+}
+</code></pre>
+
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              <span>
+                <i class="iconfont icon-inbox"></i>
+                
+                  <a class="hover-with-bg" href="/categories/Android">Android</a>
+                  &nbsp;
+                
+              </span>&nbsp;&nbsp;
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/FileProvider">FileProvider</a>
+                
+                  <a class="hover-with-bg" href="/tags/App%E6%9B%B4%E6%96%B0">App更新</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+      <br><br>
+      
+      
+
+    
+  </div>
+</div>
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <br>
+
+    
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv">总访问量 
+          <span id="busuanzi_value_site_pv"></span> 次</span>&nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv">总访客数 
+            <span id="busuanzi_value_site_uv"></span> 人</span>&nbsp;
+  
+  <br>
+
+
+
+    
+
+
+    <!-- cnzz Analytics icon -->
+    
+
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="/lib/jquery/jquery.min.js" ></script>
+<script src="/lib/popper/popper.min.js" ></script>
+<script src="/lib/bootstrap/js/bootstrap.min.js" ></script>
+<script src="/lib/mdbootstrap/js/mdb.min.js" ></script>
+<script src="/js/main.js" ></script>
+
+
+  <script src="/js/lazyload.js" ></script>
+
+
+
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
+
+
+
+  <script src="/lib/smooth-scroll/smooth-scroll.min.js" ></script>
+
+
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+<!-- Plugins -->
+
+
+  
+    <!-- Baidu Analytics -->
+    <script>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?a54c6764d28d1346797b3d38798f84af";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  <!-- cnzz Analytics -->
+  
+
+
+
+  <script src="/lib/prettify/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  linenums');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script src="/lib/typed/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "应用内更新App&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script src="/lib/anchor/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "false",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script src="/lib/fancybox/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

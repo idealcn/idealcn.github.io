@@ -141,6 +141,159 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/01/26/%E5%BA%94%E7%94%A8%E5%86%85%E6%9B%B4%E6%96%B0App/">
+        <p class="h4 index-header">应用内更新App</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">需要三步：
+
+6.0 动态申请存储权限
+7.0 通过FileProvider创建uri
+8.0 需要申请【安装未知来源应用权限】
+
+应用内更新App，在将下载的App保存到本地时，肯定要先处理申请存储权限。这里不提。
+当安装App时，需要提供本地App的存储路径。在不同的Android版本上会有不同的提供方式。
+FileProviderAndroid 7（API24）开始使用FileProvider共享应用内的文件。向外界暴露一个安全的文件Uri(格式：”content:// “  代替以前的 “file://“)。
+声明FileProvider在AndroidManifest.xml中声明一个FileProvider。
+ &lt;manifest xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+        package=&quot;your app PackageName&quot;&gt;
+        &lt;application
+            ...&gt;
+            &lt;provider
+                android:name=&quot;android.support.v4.content.FileProvider&quot;
+                android:authorities=&quot;${your app PackageName}.fileprovider&quot;
+                android:grantUriPermissions=&quot;true&quot;
+                android:exported=&quot;false&quot;&gt;
+                &lt;meta-data
+                    android:name=&quot;android.support.FILE_PROVIDER_PATHS&quot;
+                    android:resource=&quot;@xml/filepaths&quot; /&gt;
+            &lt;/provider&gt;
+            ...
+        &lt;/application&gt;
+    &lt;/manifest&gt;
+
+android:exported=false;不应该将FileProvider设置成public。
+android:grantUriPermissions=true;授予临时获取文件的权限。
+&lt;meta-data&gt;子元素指向一个XML文件，该文件指定您要共享的目录。android:resource属性是该文件的路径和名称，不包含 .xml扩展名。
+指定可共享的目录如何指定共享文件的路径？只能在res/xml目录下创建filepaths.xml文件来配置共享文件路径。
+&lt;paths&gt;
+
+  &lt;!-- 至少要包含以下一种 --&gt;
+
+  &lt;!-- Context.getFilesDir() --&gt;
+  &lt;files-path path=&quot;images/&quot; name=&quot;myimages&quot; /&gt;
+
+  &lt;!-- Context.getCacheDir() --&gt;
+  &lt;cache-path name=&quot;name&quot; path=&quot;path&quot; /&gt;
+
+  &lt;!-- Environment.getExternalStorageDirectory() --&gt;
+  &lt;external-path name=&quot;name&quot; path=&quot;path&quot; /&gt;
+
+  &lt;!-- Context.getExternalFilesDir(String)和Context.getExternalFilesDir(null) --&gt;
+  &lt;external-files-path name=&quot;name&quot; path=&quot;path&quot; /&gt;
+
+  &lt;!-- Context.getExternalCacheDir() --&gt;
+  &lt;external-cache-path name=&quot;name&quot; path=&quot;path&quot; /&gt;
+
+  &lt;!-- Context.getExternalMediaDirs()  API 21+  --&gt;
+  &lt;external-media-path name=&quot;name&quot; path=&quot;path&quot; /&gt;
+
+&lt;/paths&gt;
+
+ &lt;files-path path=&quot;images/&quot; name=&quot;myimages&quot; /&gt;
+
+ &lt;files-path&gt;标记共享了应用内部存储的 files/ 目录中的目录( /data/user/0/com.ideal.file.study/files   )。path 属性共享了 files/的images/子目录。name 属性指示 FileProvider 将路径段 myimages 添加到 files/images/ 子目录中文件的内容 URI中。属于内部存储区域，通过context.getFilesDir()获取。
+对上面的name和path做个解释。
+ &lt;files-path
+        name=&quot;files&quot;
+        path=&quot;Download&quot;/&gt;
+
+    &lt;files-path
+        name=&quot;files&quot;
+        path=&quot;file&quot;/&gt;
+
+    &lt;files-path
+        name=&quot;file&quot;
+        path=&quot;file1&quot;/&gt;
+
+    &lt;files-path
+        name=&quot;f&quot;
+        path=&quot;file12&quot;/&gt;
+
+首先files-path指定的是data/user/0/packagename/files下的路径。name和path相当于我们常说的键值对key-value。因此name可以指定任意合法的值。path就是要创建的文件的子路径。也就是data/user/0/packagename/files的下一级路径。所以最终文件的路径就是data/user/0/packagename/files/${path}/filename。
+在代码中要创建这个文件路径,使用的是path而不是name：
+  val filePath = File(filesDir,&quot;${path}&quot;)
+
+生成共享文件的URIval uri : Uri = FilePRovider.getUriForFile(context,authorities,file)
+
+其中authorities就是我们在清单文件中声明的。
+授予临时权限安装App时，使用FileProvider需要授予临时权限。
+intent.flags = Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION  //读的权限
+Intent.FLAG_GRANT_WRITE_URI_PERMISSION //写的权限
+Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION //与上面的两个权限组合使用
+Intent.FLAG_GRANT_PREFIX_URI_PERMISSION // 与前面两个组合使用
+
+安装时申请未知来源权限(API26,android8.0)
+if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O){
+    //判断是否授予了允许安装未知来源App的权限
+  if (!packageManager.canRequestPackageInstalls()){
+        val packageUri = Uri.parse(&quot;package: $file-absolutePath&quot;)
+    val intent =  Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES,packageUri)
+    startActivityForResult(intent,requestCode)
+    }else {
+    installApk()
+  }
+}else {
+  installApk()
+}
+
+安装Apkfun installApk(){
+  //7.0开始使用FileProvider 
+    if (Build.VERSION_CODES.N &lt;= Build.VERSION.SDK_INT){
+    val apkUri = FileProvider.getUriForFile(this,
+                        &quot;${application_id}.fileprovider&quot;, file)
+    intent.flags = Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION
+    intent.setDataAndType(apkUri, &quot;application/vnd.android.package-archive&quot;)
+  }else{
+    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    var apkUri = Uri.fromFile(file);
+    intent.setDataAndType(apkUri, &quot;application/vnd.android.package-archive&quot;);
+  }
+}
+
+</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-01-26&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Android">Android</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/FileProvider">FileProvider</a>&nbsp;
+          
+            <a href="/tags/App%E6%9B%B4%E6%96%B0">App更新</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2020/01/23/java%E6%B3%A8%E8%A7%A3/">
         <p class="h4 index-header">java注解</p>
         
